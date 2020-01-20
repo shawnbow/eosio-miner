@@ -1,9 +1,28 @@
 {
-  "name": "account-utils",
-  "private": true,
+  "name": "eosio-miner",
+  "version": "0.1.0",
+  "author": "Shawn Bow <shawnbow81@gmail.com>",
+  "description": "EOSIO Miner supports EIDOS, POW and MICH",
+  "keywords": [
+    "EIDOS",
+    "POW",
+    "MICH",
+    "EOS",
+    "miner",
+    "EOSIO"
+  ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shawnbow/eosio-miner"
+  },
+  "bin": {
+    "eosio-miner": "dist/index.js"
+  },
   "scripts": {
-    "start": "yarn run ts-node ./src/index.ts"
+    "build:release": "rm -rf dist && tsc -p ./tsconfig.release.json",
+    "build": "rm -rf dist && tsc -p ./tsconfig.json",
+    "start": "ts-node ./src/index.ts"
   },
   "dependencies": {
     "@types/figlet": "^1.2.0",

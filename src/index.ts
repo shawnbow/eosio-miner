@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import * as yargs from 'yargs';
 import {EosClient, ITokenDesc} from './EosClient';
 import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig';
@@ -22,7 +23,7 @@ const { argv } = yargs.options({
     demandOption: true,
   },
   mine_type: {
-    description: '<EIDOS|POW>',
+    description: '<EIDOS|POW|MICH>',
     type: 'string',
     default: 'EIDOS',
     demandOption: true,
@@ -49,7 +50,7 @@ const { argv } = yargs.options({
   if (!isValidPrivate(argv.private_key)) {
     throw new Error('Error: private_key is invalid!');
   }
-  if (argv.mine_type !== 'EIDOS' && argv.mine_type !== 'POW') {
+  if (argv.mine_type !== 'EIDOS' && argv.mine_type !== 'POW' && argv.mine_type !== "MICH") {
     throw new Error('Error: mine_type is invalid!');
   }
   return true;
@@ -81,6 +82,12 @@ const mine_token: ITokenDesc = ((symbol)=>{
         symbol,
         precision: 8,
       };
+    case 'MICH':
+      return {
+        code: 'mine4charity',
+        symbol,
+        precision: 4,
+      }
     default:
       throw new Error('Error: mine_type is invalid!');
   }
