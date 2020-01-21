@@ -19,14 +19,7 @@
   resolved "https://registry.npm.taobao.org/@types/figlet/download/@types/figlet-1.2.0.tgz#2dab76da069dc8ce5dcab461f7f2788317fb01a8"
   integrity sha1-Lat22gadyM5dyrRh9/J4gxf7Aag=
 
-"@types/node-fetch@^2.5.4":
-  version "2.5.4"
-  resolved "https://registry.npm.taobao.org/@types/node-fetch/download/@types/node-fetch-2.5.4.tgz#5245b6d8841fc3a6208b82291119bc11c4e0ce44"
-  integrity sha1-UkW22IQfw6Ygi4IpERm8EcTgzkQ=
-  dependencies:
-    "@types/node" "*"
-
-"@types/node@*", "@types/node@^13.1.6":
+"@types/node@^13.1.6":
   version "13.1.6"
   resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-13.1.6.tgz#076028d0b0400be8105b89a0a55550c86684ffec"
   integrity sha1-B2Ao0LBAC+gQW4mgpVVQyGaE/+w=
@@ -83,7 +76,7 @@ base-x@^3.0.2:
   dependencies:
     safe-buffer "^5.0.1"
 
-bigi@1.4.2, bigi@^1.1.0, bigi@^1.4.2:
+bigi@1.4.2, bigi@^1.1.0:
   version "1.4.2"
   resolved "https://registry.npm.taobao.org/bigi/download/bigi-1.4.2.tgz#9c665a95f88b8b08fc05cfd731f561859d725825"
   integrity sha1-nGZalfiLiwj8Bc/XMfVhhZ1yWCU=
@@ -99,19 +92,7 @@ browserify-aes@1.0.6:
     evp_bytestokey "^1.0.0"
     inherits "^2.0.1"
 
-browserify-aes@^1.0.6:
-  version "1.2.0"
-  resolved "https://registry.npm.taobao.org/browserify-aes/download/browserify-aes-1.2.0.tgz#326734642f403dabc3003209853bb70ad428ef48"
-  integrity sha1-Mmc0ZC9APavDADIJhTu3CtQo70g=
-  dependencies:
-    buffer-xor "^1.0.3"
-    cipher-base "^1.0.0"
-    create-hash "^1.1.0"
-    evp_bytestokey "^1.0.3"
-    inherits "^2.0.1"
-    safe-buffer "^5.0.1"
-
-bs58@4.0.1, bs58@^4.0.1:
+bs58@4.0.1:
   version "4.0.1"
   resolved "https://registry.npm.taobao.org/bs58/download/bs58-4.0.1.tgz#be161e76c354f6f788ae4071f63f34e8c4f0a42a"
   integrity sha1-vhYedsNU9veIrkBx9j806MTwpCo=
@@ -123,12 +104,12 @@ buffer-from@^1.0.0:
   resolved "https://registry.npm.taobao.org/buffer-from/download/buffer-from-1.1.1.tgz#32713bc028f75c02fdb710d7c7bcec1f2c6070ef"
   integrity sha1-MnE7wCj3XAL9txDXx7zsHyxgcO8=
 
-buffer-xor@^1.0.2, buffer-xor@^1.0.3:
+buffer-xor@^1.0.2:
   version "1.0.3"
   resolved "https://registry.npm.taobao.org/buffer-xor/download/buffer-xor-1.0.3.tgz#26e61ed1422fb70dd42e6e36729ed51d855fe8d9"
   integrity sha1-JuYe0UIvtw3ULm42cp7VHYVf6Nk=
 
-bytebuffer@5.0.1, bytebuffer@^5.0.1:
+bytebuffer@5.0.1:
   version "5.0.1"
   resolved "https://registry.npm.taobao.org/bytebuffer/download/bytebuffer-5.0.1.tgz#582eea4b1a873b6d020a48d58df85f0bba6cfddd"
   integrity sha1-WC7qSxqHO20CCkjVjfhfC7ps/d0=
@@ -192,7 +173,7 @@ create-hash@1.1.3:
     ripemd160 "^2.0.0"
     sha.js "^2.4.0"
 
-create-hash@^1.1.0, create-hash@^1.1.3:
+create-hash@^1.1.0:
   version "1.2.0"
   resolved "https://registry.npm.taobao.org/create-hash/download/create-hash-1.2.0.tgz#889078af11a63756bcfb59bd221996be3a9ef196"
   integrity sha1-iJB4rxGmN1a8+1m9IhmWvjqe8ZY=
@@ -207,18 +188,6 @@ create-hmac@1.1.6:
   version "1.1.6"
   resolved "https://registry.npm.taobao.org/create-hmac/download/create-hmac-1.1.6.tgz#acb9e221a4e17bdb076e90657c42b93e3726cf06"
   integrity sha1-rLniIaThe9sHbpBlfEK5PjcmzwY=
-  dependencies:
-    cipher-base "^1.0.3"
-    create-hash "^1.1.0"
-    inherits "^2.0.1"
-    ripemd160 "^2.0.0"
-    safe-buffer "^5.0.1"
-    sha.js "^2.4.8"
-
-create-hmac@^1.1.6:
-  version "1.1.7"
-  resolved "https://registry.npm.taobao.org/create-hmac/download/create-hmac-1.1.7.tgz#69170c78b3ab957147b2b8b04572e47ead2243ff"
-  integrity sha1-aRcMeLOrlXFHsriwRXLkfq0iQ/8=
   dependencies:
     cipher-base "^1.0.3"
     create-hash "^1.1.0"
@@ -251,14 +220,6 @@ ecurve@1.0.5:
   dependencies:
     bigi "^1.1.0"
 
-ecurve@^1.0.5:
-  version "1.0.6"
-  resolved "https://registry.npm.taobao.org/ecurve/download/ecurve-1.0.6.tgz#dfdabbb7149f8d8b78816be5a7d5b83fcf6de797"
-  integrity sha1-39q7txSfjYt4gWvlp9W4P89t55c=
-  dependencies:
-    bigi "^1.1.0"
-    safe-buffer "^5.0.1"
-
 emoji-regex@^8.0.0:
   version "8.0.0"
   resolved "https://registry.npm.taobao.org/emoji-regex/download/emoji-regex-8.0.0.tgz#e818fd69ce5ccfcb404594f842963bf53164cc37"
@@ -271,21 +232,16 @@ eos-endpoint@^2.0.1:
   dependencies:
     axios "^0.19.0"
 
-eosjs-ecc@4.0.4:
-  version "4.0.4"
-  resolved "https://registry.npm.taobao.org/eosjs-ecc/download/eosjs-ecc-4.0.4.tgz#431450f30a6f73088ff5d7ba1ebdfe967a5ca4ab"
-  integrity sha1-QxRQ8wpvcwiP9de6Hr3+lnpcpKs=
+eosio-helper@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/eosio-helper/-/eosio-helper-0.0.2.tgz#cf83b90a32df66a416e557b0dbe538a0203ddbad"
+  integrity sha512-I15Su2c/LIL9+MToGhxxlwcNUYJdnXk6sXJRkeBxSsiTUAY5YYZU3ZJg3VXZyjWSdYdvcV5Ehj54M6rczmVoXg==
   dependencies:
-    bigi "^1.4.2"
-    browserify-aes "^1.0.6"
-    bs58 "^4.0.1"
-    bytebuffer "^5.0.1"
-    create-hash "^1.1.3"
-    create-hmac "^1.1.6"
-    ecurve "^1.0.5"
-    randombytes "^2.0.5"
+    eosjs "^20.0.3"
+    eosjs-ecc "^4.0.7"
+    node-fetch "^2.6.0"
 
-eosjs-ecc@^4.0.7:
+eosjs-ecc@4.0.7, eosjs-ecc@^4.0.7:
   version "4.0.7"
   resolved "https://registry.npm.taobao.org/eosjs-ecc/download/eosjs-ecc-4.0.7.tgz#f5246da3b84839fcc237204768ef6e5ea56cc814"
   integrity sha1-9SRto7hIOfzCNyBHaO9uXqVsyBQ=
@@ -300,16 +256,16 @@ eosjs-ecc@^4.0.7:
     ecurve "1.0.5"
     randombytes "2.0.5"
 
-eosjs@^20.0.0:
-  version "20.0.0"
-  resolved "https://registry.npm.taobao.org/eosjs/download/eosjs-20.0.0.tgz#43940abfe15cd191ce4027d60294036e914613e9"
-  integrity sha1-Q5QKv+Fc0ZHOQCfWApQDbpFGE+k=
+eosjs@^20.0.3:
+  version "20.0.3"
+  resolved "https://registry.yarnpkg.com/eosjs/-/eosjs-20.0.3.tgz#f3ac1fa119b76dd07bf2825ad27342f6502a533b"
+  integrity sha512-h0WSxsDo7AHz5IzpbQDrzyT/CYmbBDtFiiolTdtGd2FdKXEa6LDER4WbNp4qxCY7kD65KeG3knkGmOOFGbPJxw==
   dependencies:
     babel-runtime "6.26.0"
-    eosjs-ecc "4.0.4"
+    eosjs-ecc "4.0.7"
     text-encoding "0.7.0"
 
-evp_bytestokey@^1.0.0, evp_bytestokey@^1.0.3:
+evp_bytestokey@^1.0.0:
   version "1.0.3"
   resolved "https://registry.npm.taobao.org/evp_bytestokey/download/evp_bytestokey-1.0.3.tgz#7fcbdb198dc71959432efe13842684e0525acb02"
   integrity sha1-f8vbGY3HGVlDLv4ThCaE4FJaywI=
@@ -429,13 +385,6 @@ randombytes@2.0.5:
   version "2.0.5"
   resolved "https://registry.npm.taobao.org/randombytes/download/randombytes-2.0.5.tgz#dc009a246b8d09a177b4b7a0ae77bc570f4b1b79"
   integrity sha1-3ACaJGuNCaF3tLegrne8Vw9LG3k=
-  dependencies:
-    safe-buffer "^5.1.0"
-
-randombytes@^2.0.5:
-  version "2.1.0"
-  resolved "https://registry.npm.taobao.org/randombytes/download/randombytes-2.1.0.tgz#df6f84372f0270dc65cdf6291349ab7a473d4f2a"
-  integrity sha1-32+ENy8CcNxlzfYpE0mrekc9Tyo=
   dependencies:
     safe-buffer "^5.1.0"
 

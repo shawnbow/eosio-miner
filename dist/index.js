@@ -21,9 +21,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const yargs = __importStar(require("yargs"));
-const EosClient_1 = require("./EosClient");
-const eosjs_jssig_1 = require("eosjs/dist/eosjs-jssig");
-const eosjs_ecc_1 = require("eosjs-ecc");
+const eosio_helper_1 = require("eosio-helper");
 const chalk = __importStar(require("chalk"));
 const figlet = __importStar(require("figlet"));
 const eos_endpoint_1 = __importDefault(require("eos-endpoint"));
@@ -54,28 +52,25 @@ const { argv } = yargs.options({
         demandOption: true,
     },
     min_actions: {
-        description: 'The min actions per transaction, default is 32',
+        description: 'Min actions per transaction, default is 32',
         type: 'number',
         default: 32,
         demandOption: true,
     },
     max_actions: {
-        description: 'The max actions per transaction, default is 256',
+        description: 'Max actions per transaction, default is 256',
         type: 'number',
         default: 256,
         demandOption: true,
     },
 }).check(function (argv) {
-    if (!eosjs_ecc_1.isValidPrivate(argv.private_key)) {
-        throw new Error('Error: private_key is invalid!');
-    }
     if (argv.mine_type !== 'EIDOS' && argv.mine_type !== 'POW' && argv.mine_type !== "MICH") {
         throw new Error('Error: mine_type is invalid!');
     }
     return true;
 });
 const account = argv.account;
-const signatureProvider = new eosjs_jssig_1.JsSignatureProvider([argv.private_key]);
+const private_key = argv.private_key;
 const MAX_CPU_PER_ACTION = argv.max_cpu_per_action;
 const MIN_ACTIONS = argv.min_actions;
 const MAX_ACTIONS = argv.max_actions;
@@ -109,7 +104,7 @@ const mine_token = ((symbol) => {
     }
 })(argv.mine_type);
 exports.g = {
-    clients: EosClient_1.EosClient.ENDPOINTS.map(endpoint => new EosClient_1.EosClient({ endpoint, signatureProvider })),
+    clients: eosio_helper_1.EosClient.ENDPOINTS.map(endpoint => new eosio_helper_1.EosClient({ endpoint, private_keys: [private_key] })),
     pause_mine_once: false,
     num_actions: MAX_ACTIONS,
 };
@@ -119,8 +114,8 @@ function get_client() {
 function refresh_clients() {
     return __awaiter(this, void 0, void 0, function* () {
         const newpoints = yield eos_endpoint_1.default();
-        const allpoints = Array.from(new Set([...EosClient_1.EosClient.ENDPOINTS, ...(newpoints.map(({ url }) => url))]));
-        exports.g.clients = allpoints.map((endpoint) => new EosClient_1.EosClient({ endpoint, signatureProvider }));
+        const allpoints = Array.from(new Set([...eosio_helper_1.EosClient.ENDPOINTS, ...(newpoints.map(({ url }) => url))]));
+        exports.g.clients = allpoints.map((endpoint) => new eosio_helper_1.EosClient({ endpoint, private_keys: [private_key] }));
     });
 }
 function get_cpu_info(account, client) {
@@ -167,7 +162,7 @@ function mine() {
             // get pre mine balance
             const { balance: pre_mine_balance } = yield client.getBalance(mine_token.code, account, mine_token.symbol);
             // apply mine
-            const actions = EosClient_1.EosClient.generteTransferActions(account, mine_token.code, "0.0001 EOS", "", eos_token.code, [
+            const actions = eosio_helper_1.EosClient.generteTransferActions(account, mine_token.code, "0.0001 EOS", "", eos_token.code, [
                 {
                     actor: account,
                     permission: "active",

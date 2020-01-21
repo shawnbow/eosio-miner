@@ -1,6 +1,6 @@
 {
   "name": "eosio-miner",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Shawn Bow <shawnbow81@gmail.com>",
   "description": "EOSIO Miner supports EIDOS, POW and MICH",
   "keywords": [
@@ -29,15 +29,12 @@
     "@types/yargs": "^15.0.0",
     "chalk": "^3.0.0",
     "eos-endpoint": "^2.0.1",
-    "eosjs": "^20.0.0",
-    "eosjs-ecc": "^4.0.7",
+    "eosio-helper": "^0.0.2",
     "figlet": "^1.2.4",
-    "node-fetch": "^2.6.0",
     "yargs": "^15.1.0"
   },
   "devDependencies": {
     "@types/node": "^13.1.6",
-    "@types/node-fetch": "^2.5.4",
     "ts-node": "^8.6.1",
     "typescript": "^3.7.4"
   }

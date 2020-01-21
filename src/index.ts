@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 import * as yargs from 'yargs';
-import {EosClient, ITokenDesc} from './EosClient';
-import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig';
-import { isValidPrivate } from 'eosjs-ecc';
+import { EosClient } from 'eosio-helper';
 import * as chalk from 'chalk';
 import * as figlet from 'figlet';
 import getApiEndpoints from 'eos-endpoint';
@@ -35,21 +33,18 @@ const { argv } = yargs.options({
     demandOption: true,
   },
   min_actions: {
-    description: 'The min actions per transaction, default is 32',
+    description: 'Min actions per transaction, default is 32',
     type: 'number',
     default: 32,
     demandOption: true,
   },
   max_actions: {
-    description: 'The max actions per transaction, default is 256',
+    description: 'Max actions per transaction, default is 256',
     type: 'number',
     default: 256,
     demandOption: true,
   },
 }).check(function(argv) {
-  if (!isValidPrivate(argv.private_key)) {
-    throw new Error('Error: private_key is invalid!');
-  }
   if (argv.mine_type !== 'EIDOS' && argv.mine_type !== 'POW' && argv.mine_type !== "MICH") {
     throw new Error('Error: mine_type is invalid!');
   }
@@ -57,10 +52,16 @@ const { argv } = yargs.options({
 });
 
 const account = argv.account;
-const signatureProvider = new JsSignatureProvider([argv.private_key]);
+const private_key = argv.private_key;
 const MAX_CPU_PER_ACTION = argv.max_cpu_per_action;
 const MIN_ACTIONS = argv.min_actions;
 const MAX_ACTIONS = argv.max_actions;
+
+interface ITokenDesc {
+  code: string;
+  symbol: string;
+  precision: number;
+}
 
 const eos_token: ITokenDesc = {
   code: "eosio.token",
@@ -94,7 +95,7 @@ const mine_token: ITokenDesc = ((symbol)=>{
 })(argv.mine_type);
 
 export let g = {
-  clients: EosClient.ENDPOINTS.map(endpoint => new EosClient({endpoint, signatureProvider})),
+  clients: EosClient.ENDPOINTS.map(endpoint => new EosClient({endpoint, private_keys: [private_key]})),
   pause_mine_once: false,
   num_actions: MAX_ACTIONS,
 };
@@ -106,7 +107,7 @@ function get_client(): EosClient {
 async function refresh_clients() {
   const newpoints = await getApiEndpoints();
   const allpoints = Array.from(new Set([...EosClient.ENDPOINTS, ...(newpoints.map(({url})=>url))]));
-  g.clients = allpoints.map((endpoint) => new EosClient({endpoint, signatureProvider}));
+  g.clients = allpoints.map((endpoint) => new EosClient({endpoint, private_keys: [private_key]}));
 }
 
 async function get_cpu_info(account: string, client: EosClient): Promise<{ max: number, available:number, used: number }> {
