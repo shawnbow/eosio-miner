@@ -196,3 +196,4 @@ function mine() {
     setInterval(check_cpu, 60 * 1000); // check cpu per 1mins
     setInterval(refresh_clients, 60 * 60 * 1000); // refresh clients per 60mins
 }))();
+//# sourceMappingURL=index.js.map
