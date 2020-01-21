@@ -1,7 +1,7 @@
 
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "es6",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "target": "es6",
@@ -11,6 +11,9 @@
     "rootDir": "src",
     "outDir": "dist",
     "baseUrl": ".",
+    // "declaration": true,
+    // "declarationDir": "dist",
+    // "declarationMap": false,
     "paths": {
       "*": [
         "node_modules/*",
@@ -23,5 +26,5 @@
   ],
   "exclude": [
     "node_modules/**"
-  ],
+  ]
 }

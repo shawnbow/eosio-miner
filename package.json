@@ -1,6 +1,6 @@
 {
   "name": "eosio-miner",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Shawn Bow <shawnbow81@gmail.com>",
   "description": "EOSIO Miner supports EIDOS, POW and MICH",
   "keywords": [
@@ -29,7 +29,7 @@
     "@types/yargs": "^15.0.0",
     "chalk": "^3.0.0",
     "eos-endpoint": "^2.0.1",
-    "eosio-helper": "^0.0.2",
+    "eosio-helper": "^0.0.5",
     "figlet": "^1.2.4",
     "yargs": "^15.1.0"
   },

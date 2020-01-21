@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import * as yargs from 'yargs';
+import yargs from 'yargs';
 import { EosClient } from 'eosio-helper';
-import * as chalk from 'chalk';
-import * as figlet from 'figlet';
+import chalk from 'chalk';
+import figlet from 'figlet';
 import getApiEndpoints from 'eos-endpoint';
 
 function sleep(milliseconds:number ) {
