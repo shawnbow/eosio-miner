@@ -94,7 +94,7 @@ const mine_token: ITokenDesc = ((symbol)=>{
   }
 })(argv.mine_type);
 
-export let g = {
+let g = {
   clients: EosClient.ENDPOINTS.map(endpoint => new EosClient({endpoint, private_keys: [private_key]})),
   pause_mine_once: false,
   num_actions: MAX_ACTIONS,
@@ -102,12 +102,6 @@ export let g = {
 
 function get_client(): EosClient {
   return g.clients[Math.floor(Math.random() * g.clients.length)];
-}
-
-async function refresh_clients() {
-  const newpoints = await getApiEndpoints();
-  const allpoints = Array.from(new Set([...EosClient.ENDPOINTS, ...(newpoints.map(({url})=>url))]));
-  g.clients = allpoints.map((endpoint) => new EosClient({endpoint, private_keys: [private_key]}));
 }
 
 async function get_cpu_info(account: string, client: EosClient): Promise<{ max: number, available:number, used: number }> {
@@ -149,21 +143,20 @@ async function mine() {
     const client = get_client();
 
     // get pre mine balance
-    const {balance: pre_mine_balance} = await client.getBalance(mine_token.code, account, mine_token.symbol);
+    const { balance: pre_mine_balance } = await client.getBalance(mine_token.code, account, mine_token.symbol);
 
     // apply mine
-    const actions = EosClient.generteTransferActions(
-      account,
-      mine_token.code,
-      "0.0001 EOS",
-      "",
+    const actions = EosClient.makeActions(
       eos_token.code,
+      'transfer',
+      { from: account, to: mine_token.code, quantity: '0.0001 EOS', memo: ''},
       [
         {
           actor: account,
           permission: "active",
         },
-      ], g.num_actions
+      ],
+      g.num_actions
     );
     const max_cpu_usage_ms = Math.ceil(MAX_CPU_PER_ACTION * g.num_actions / 1000);
     console.info(chalk.blue(`mine: num_actions=${g.num_actions}, max_cpu_usage_ms=${max_cpu_usage_ms}`));
@@ -175,7 +168,7 @@ async function mine() {
     }
 
     // get post mine balance
-    const {balance: post_mine_balance} = await client.getBalance(mine_token.code, account, mine_token.symbol);
+    const { balance: post_mine_balance } = await client.getBalance(mine_token.code, account, mine_token.symbol);
     if (post_mine_balance > pre_mine_balance) {
       console.info(chalk.green(`Mined ${(post_mine_balance - pre_mine_balance).toFixed(mine_token.precision)} ${mine_token.symbol}!`),
       );
@@ -190,17 +183,22 @@ async function mine() {
   console.info(`min_actons=${MIN_ACTIONS}, max_actions=${MAX_ACTIONS}, max_cpu_per_action=${MAX_CPU_PER_ACTION}us`);
 
   const client = get_client();
-  const {balance: eos_balance} = await client.getBalance(eos_token.code, account, eos_token.symbol);
+  const { balance: eos_balance } = await client.getBalance(eos_token.code, account, eos_token.symbol);
   console.info(`${eos_token.symbol} balance: ${eos_balance}`);
 
-  const {balance: mine_balance} = await client.getBalance(mine_token.code, account, mine_token.symbol);
+  const { balance: mine_balance } = await client.getBalance(mine_token.code, account, mine_token.symbol);
   console.info(`${mine_token.symbol} balance: ${mine_balance}`);
 
   if (eos_balance < 0.01) {
     console.error('Your EOS balance is too low, must be greater than 0.01 EOS, please deposit more EOS to your account.');
     return;
   }
-  setInterval(mine, 3*1000); // mine per 3s
+  setInterval(mine, 2*1000); // mine per 2s
   setInterval(check_cpu, 60*1000); // check cpu per 1mins
-  setInterval(refresh_clients, 60*60*1000); // refresh clients per 60mins
+
+  // setInterval(async ()=>{
+  //   const newpoints = await getApiEndpoints();
+  //   const allpoints = Array.from(new Set([...EosClient.ENDPOINTS, ...(newpoints.map(({url})=>url))]));
+  //   g.clients = allpoints.map((endpoint) => new EosClient({endpoint, private_keys: [private_key]}));
+  // }, 60*60*1000); // refresh clients per 60mins
 })();

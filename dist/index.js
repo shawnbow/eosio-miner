@@ -17,7 +17,6 @@ const yargs_1 = __importDefault(require("yargs"));
 const eosio_helper_1 = require("eosio-helper");
 const chalk_1 = __importDefault(require("chalk"));
 const figlet_1 = __importDefault(require("figlet"));
-const eos_endpoint_1 = __importDefault(require("eos-endpoint"));
 function sleep(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
@@ -96,20 +95,13 @@ const mine_token = ((symbol) => {
             throw new Error('Error: mine_type is invalid!');
     }
 })(argv.mine_type);
-exports.g = {
+let g = {
     clients: eosio_helper_1.EosClient.ENDPOINTS.map(endpoint => new eosio_helper_1.EosClient({ endpoint, private_keys: [private_key] })),
     pause_mine_once: false,
     num_actions: MAX_ACTIONS,
 };
 function get_client() {
-    return exports.g.clients[Math.floor(Math.random() * exports.g.clients.length)];
-}
-function refresh_clients() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const newpoints = yield eos_endpoint_1.default();
-        const allpoints = Array.from(new Set([...eosio_helper_1.EosClient.ENDPOINTS, ...(newpoints.map(({ url }) => url))]));
-        exports.g.clients = allpoints.map((endpoint) => new eosio_helper_1.EosClient({ endpoint, private_keys: [private_key] }));
-    });
+    return g.clients[Math.floor(Math.random() * g.clients.length)];
 }
 function get_cpu_info(account, client) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -136,8 +128,8 @@ function check_cpu() {
             const client = get_client();
             const cpu_info = yield get_cpu_info(account, client);
             const more_num = MIN_ACTIONS * Math.ceil((cpu_info.available + 1) / MAX_CPU_PER_ACTION / MIN_ACTIONS);
-            exports.g.num_actions = Math.min(more_num, MAX_ACTIONS);
-            console.info(chalk_1.default.blue(`check_cpu: cpu_available=${cpu_info.available} set num_actions=${exports.g.num_actions}`));
+            g.num_actions = Math.min(more_num, MAX_ACTIONS);
+            console.info(chalk_1.default.blue(`check_cpu: cpu_available=${cpu_info.available} set num_actions=${g.num_actions}`));
         }
         catch (e) {
             console.error(e.toString());
@@ -147,26 +139,26 @@ function check_cpu() {
 function mine() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            if (exports.g.pause_mine_once) {
-                exports.g.pause_mine_once = false;
+            if (g.pause_mine_once) {
+                g.pause_mine_once = false;
                 return;
             }
             const client = get_client();
             // get pre mine balance
             const { balance: pre_mine_balance } = yield client.getBalance(mine_token.code, account, mine_token.symbol);
             // apply mine
-            const actions = eosio_helper_1.EosClient.generteTransferActions(account, mine_token.code, "0.0001 EOS", "", eos_token.code, [
+            const actions = eosio_helper_1.EosClient.makeActions(eos_token.code, 'transfer', { from: account, to: mine_token.code, quantity: '0.0001 EOS', memo: '' }, [
                 {
                     actor: account,
                     permission: "active",
                 },
-            ], exports.g.num_actions);
-            const max_cpu_usage_ms = Math.ceil(MAX_CPU_PER_ACTION * exports.g.num_actions / 1000);
-            console.info(chalk_1.default.blue(`mine: num_actions=${exports.g.num_actions}, max_cpu_usage_ms=${max_cpu_usage_ms}`));
-            exports.g.pause_mine_once = !(yield client.pushTransaction(actions, { max_cpu_usage_ms }));
-            if (exports.g.pause_mine_once) {
-                exports.g.num_actions = Math.max(exports.g.num_actions - MIN_ACTIONS, MIN_ACTIONS);
-                console.warn(chalk_1.default.yellow(`pause_mine_once: set num_actions=${exports.g.num_actions}`));
+            ], g.num_actions);
+            const max_cpu_usage_ms = Math.ceil(MAX_CPU_PER_ACTION * g.num_actions / 1000);
+            console.info(chalk_1.default.blue(`mine: num_actions=${g.num_actions}, max_cpu_usage_ms=${max_cpu_usage_ms}`));
+            g.pause_mine_once = !(yield client.pushTransaction(actions, { max_cpu_usage_ms }));
+            if (g.pause_mine_once) {
+                g.num_actions = Math.max(g.num_actions - MIN_ACTIONS, MIN_ACTIONS);
+                console.warn(chalk_1.default.yellow(`pause_mine_once: set num_actions=${g.num_actions}`));
                 return;
             }
             // get post mine balance
@@ -192,8 +184,12 @@ function mine() {
         console.error('Your EOS balance is too low, must be greater than 0.01 EOS, please deposit more EOS to your account.');
         return;
     }
-    setInterval(mine, 3 * 1000); // mine per 3s
+    setInterval(mine, 2 * 1000); // mine per 2s
     setInterval(check_cpu, 60 * 1000); // check cpu per 1mins
-    setInterval(refresh_clients, 60 * 60 * 1000); // refresh clients per 60mins
+    // setInterval(async ()=>{
+    //   const newpoints = await getApiEndpoints();
+    //   const allpoints = Array.from(new Set([...EosClient.ENDPOINTS, ...(newpoints.map(({url})=>url))]));
+    //   g.clients = allpoints.map((endpoint) => new EosClient({endpoint, private_keys: [private_key]}));
+    // }, 60*60*1000); // refresh clients per 60mins
 }))();
 //# sourceMappingURL=index.js.map

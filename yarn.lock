@@ -232,10 +232,10 @@ eos-endpoint@^2.0.1:
   dependencies:
     axios "^0.19.0"
 
-eosio-helper@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/eosio-helper/-/eosio-helper-0.0.7.tgz#2054a7c8a86559b17e0a3b68d2ba3ad70e62ea5c"
-  integrity sha512-tsJUTjU04azXrUfuRJeMctqaZGBF5XOZd7Rw5+OGJH3aBVeMJ+1+z0pJ6eS+0vDIBbSI2nqQrZE3gcR9gCoIZw==
+eosio-helper@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/eosio-helper/-/eosio-helper-0.1.0.tgz#09ee68855b922923175f57c3e10c03a952ac442d"
+  integrity sha512-sg4eT75acZJSTsI4rtVoylZVf5ia9lg62+SvaSKjFwDvJhwGStvIi+w7Swlp8GS0xP6a2KIS69U+NejvU5xPfA==
   dependencies:
     eosjs "^20.0.3"
     eosjs-ecc "^4.0.7"
