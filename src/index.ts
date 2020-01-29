@@ -159,7 +159,7 @@ async function mine() {
       g.num_actions
     );
     const max_cpu_usage_ms = Math.ceil(MAX_CPU_PER_ACTION * g.num_actions / 1000);
-    console.info(chalk.blue(`mine: num_actions=${g.num_actions}, max_cpu_usage_ms=${max_cpu_usage_ms}`));
+    console.info(chalk.blue(`mine: num_actions=${g.num_actions}, max_cpu_usage_ms=${max_cpu_usage_ms}. endpoint:${client.getRpc().endpoint}`));
     g.pause_mine_once = !await client.pushTransaction(actions, { max_cpu_usage_ms } );
     if (g.pause_mine_once) {
       g.num_actions = Math.max(g.num_actions - MIN_ACTIONS, MIN_ACTIONS);
