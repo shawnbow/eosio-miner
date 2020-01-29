@@ -3,7 +3,7 @@ import yargs from 'yargs';
 import { EosClient } from 'eosio-helper';
 import chalk from 'chalk';
 import figlet from 'figlet';
-import getApiEndpoints from 'eos-endpoint';
+// import getApiEndpoints from 'eos-endpoint';
 
 function sleep(milliseconds:number ) {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -196,7 +196,7 @@ async function mine() {
   setInterval(mine, 2*1000); // mine per 2s
   setInterval(check_cpu, 60*1000); // check cpu per 1mins
 
-  // setInterval(async ()=>{
+  // setInterval(async () => {
   //   const newpoints = await getApiEndpoints();
   //   const allpoints = Array.from(new Set([...EosClient.ENDPOINTS, ...(newpoints.map(({url})=>url))]));
   //   g.clients = allpoints.map((endpoint) => new EosClient({endpoint, private_keys: [private_key]}));
