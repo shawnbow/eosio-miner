@@ -21,6 +21,7 @@ const figlet_1 = __importDefault(require("figlet"));
 function sleep(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
+const DEFAULT_MAX_CPU_PER_ACTION = 200;
 const { argv } = yargs_1.default.options({
     account: {
         description: 'Your EOS account',
@@ -39,9 +40,9 @@ const { argv } = yargs_1.default.options({
         demandOption: true,
     },
     max_cpu_per_action: {
-        description: 'Max cpu usage (µs) per action, default is 300 µs',
+        description: `Max cpu usage (µs) per action, default is ${DEFAULT_MAX_CPU_PER_ACTION} µs`,
         type: 'number',
-        default: 300,
+        default: DEFAULT_MAX_CPU_PER_ACTION,
         demandOption: true,
     },
     min_actions: {
@@ -128,7 +129,8 @@ function check_cpu() {
         try {
             const client = get_client();
             const cpu_info = yield get_cpu_info(account, client);
-            const more_num = MIN_ACTIONS * Math.ceil((cpu_info.available + 1) / MAX_CPU_PER_ACTION / MIN_ACTIONS);
+            const max_cpu_per_action = MAX_CPU_PER_ACTION || DEFAULT_MAX_CPU_PER_ACTION;
+            const more_num = MIN_ACTIONS * Math.ceil((cpu_info.available + 1) / max_cpu_per_action / MIN_ACTIONS);
             g.num_actions = Math.min(more_num, MAX_ACTIONS);
             console.info(chalk_1.default.blue(`check_cpu: cpu_available=${cpu_info.available} set num_actions=${g.num_actions}`));
         }
@@ -158,7 +160,7 @@ function mine() {
             console.info(chalk_1.default.blue(`mine: num_actions=${g.num_actions}, max_cpu_usage_ms=${max_cpu_usage_ms}. endpoint:${client.getRpc().endpoint}`));
             g.pause_mine_once = !(yield client.pushTransaction(actions, { max_cpu_usage_ms }));
             if (g.pause_mine_once) {
-                g.num_actions = Math.max(g.num_actions - MIN_ACTIONS, MIN_ACTIONS);
+                g.num_actions = Math.max(g.num_actions / 2, MIN_ACTIONS);
                 console.warn(chalk_1.default.yellow(`pause_mine_once: set num_actions=${g.num_actions}`));
                 return;
             }
