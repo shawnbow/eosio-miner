@@ -162,7 +162,7 @@ async function mine() {
     console.info(chalk.blue(`mine: num_actions=${g.num_actions}, max_cpu_usage_ms=${max_cpu_usage_ms}. endpoint:${client.getRpc().endpoint}`));
     g.pause_mine_once = !await client.pushTransaction(actions, { max_cpu_usage_ms } );
     if (g.pause_mine_once) {
-      g.num_actions = Math.max(g.num_actions - MIN_ACTIONS, MIN_ACTIONS);
+      g.num_actions = Math.max(g.num_actions/2, MIN_ACTIONS);
       console.warn(chalk.yellow(`pause_mine_once: set num_actions=${g.num_actions}`));
       return;
     }
