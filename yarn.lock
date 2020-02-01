@@ -252,10 +252,10 @@ eos-endpoint@^2.0.1:
   dependencies:
     axios "^0.19.0"
 
-eosio-helper@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/eosio-helper/-/eosio-helper-0.1.2.tgz#cc229c22ad6ed506daf473910009f59ce70f58e5"
-  integrity sha512-S7r1U9I79N8tAR3dGJMFtLV8MqjUC0PqU/u1eh81UIR5wFGRJo7NfE41hTu3vkwkPGj8GzT8mtnVvW9F/AvweQ==
+eosio-helper@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/eosio-helper/-/eosio-helper-0.1.4.tgz#6ce80834574b98fccc0aee697db20d60495f12e8"
+  integrity sha512-E16BjGabQjVevzalUURitlFO4KiyNc3eDM0jg5ci7/XDinRg8q8rARm/bX+dS7DJ6KUdhpISKEmxhxZPS19zjw==
   dependencies:
     "@dfuse/client" "^0.3.6"
     eosjs "^20.0.3"
